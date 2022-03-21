@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'avatar',
     ];
 
     /**
@@ -58,4 +59,5 @@ class User extends Authenticatable implements JWTSubject
     {
       return $this->hasMany(Book::class);
     }
+
 }
