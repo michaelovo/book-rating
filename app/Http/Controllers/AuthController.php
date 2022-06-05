@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -57,15 +58,24 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
+        /* Failed Validation response */
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
+        /* Confirm token is valid */
         if (!$token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        /* Prepare the success response */
+        $data = new \stdClass();
+        $data->user = new UserResource(Auth()->user());
+        $data->token = $this->respondWithToken($token);
+
+        /* Send success http response */
+        return response()->json(['data'=>$data,'Success'=>'Logged-in successfully'],200);
+
     }
 
     /**
