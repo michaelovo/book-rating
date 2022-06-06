@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -34,5 +35,6 @@ Route::group(['prefix'=>'v1','middleware' => 'api'], function($router) {
     Route::patch('/book/update/{bookId}', [BookController::class, 'updateBook'])->middleware('auth:api');
     Route::delete('/book/delete/{bookId}', [BookController::class, 'deleteBook'])->middleware('auth:api');
     Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->middleware('auth:api');
+    Route::get('/rate/book/{bookId}', [RatingController::class, 'store'])->middleware('auth:api');
 
 });

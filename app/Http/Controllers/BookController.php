@@ -56,7 +56,7 @@ class BookController extends Controller
             if (is_null($book)) {
                 $errors = new \stdClass();
                 $errors->book = ['Sorry, A Book with this ID could not be retrieved!'];
-                return response()->json(['resp'=>$errors,'error'=>'Invalid book option selected'], 201);
+                return response()->json(['resp'=>$errors,'error'=>'Invalid book option selected'], 404);
             }
 
               /* Prepare the success response */
